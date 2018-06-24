@@ -3,28 +3,13 @@ package loan
 type LoanPayment struct {
 	interest  float64
 	principle float64
-	amount    float64
 }
 
-func NewPayment(interestDue, principleDue, paymentAmount float64) (LoanPayment, error) {
-	amountDue := interestDue + principleDue
-	if amountDue > paymentAmount {
-		return LoanPayment{}, NewPaymentError(paymentAmount, amountDue, InsufficiantFunds)
-	}
-
-	var principleToPay float64
-	if principleDue == 0 {
-		principleToPay = paymentAmount
-	} else {
-		principleToPay = paymentAmount
-	}
-
-	payment := LoanPayment{
-		interest:  interestDue,
-		principle: principleToPay,
-	}
-
-	return payment, nil
+func NewPayment(interestToPay, principleToPay float64) LoanPayment {
+    return LoanPayment{
+        interest: interestToPay,
+        principle: principleToPay,
+    }
 }
 
 func (p LoanPayment) Interest() float64 {
