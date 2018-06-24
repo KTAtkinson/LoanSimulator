@@ -1,6 +1,7 @@
 package loan
 
 import (
+    "fmt"
 	"math"
 	"testing"
 )
@@ -20,8 +21,14 @@ func TestNewLoan(t *testing.T) {
 
 	for _, example := range loanSpecs {
 		newLoan, _ := NewLoan(example.amount, example.annualPercentageRate, example.term)
-		if math.Abs(newLoan.monthlyPayment-example.monthlyPayment) > (.0001 * example.monthlyPayment) {
-			t.Errorf("Expected monthly payment to be %v, is %v.", example.monthlyPayment, newLoan.monthlyPayment)
+		if (newLoan.monthlyPayment != newLoan.monthlyPayment) {
+            tolerance := .0001 + example.monthlyPayment
+            message := fmt.Sprintf("Expected monthly payment to be %v, is %v", example.monthlyPayment, newLoan.monthlyPayment)
+            if (math.Abs(newLoan.monthlyPayment-newLoan.monthlyPayment) > tolerance) {
+                t.Error(message)
+            } else {
+                t.Log(message)
+            }
 		}
 		if newLoan.amount != example.amount {
 			t.Errorf("Expected new loan amount to be %v, is %v.", example.amount, newLoan.amount)
